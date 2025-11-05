@@ -8,3 +8,14 @@ export const createApplication = async (application: NewApplication): Promise<Ap
     return rows[0];
 };
 
+export const findAllApplications = async (): Promise<Application[]> => {
+    const { rows } = await query(
+        "SELECT * FROM applications ORDER BY applied_at DESC"
+    );
+    return rows;
+};
+
+export const findApplicationById = async (id: number): Promise<Application | null> => {
+    const { rows } = await query("SELECT * FROM applications WHERE id = $1", [id]);
+    return rows[0] || null;
+}
