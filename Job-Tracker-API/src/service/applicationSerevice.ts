@@ -2,12 +2,13 @@ import { query } from "../config/database";
 import { Application, NewApplication } from "../types/application.types";
 
 export const createApplication = async (
-  application: NewApplication
+    appData: NewApplication, userId: number
+    
 ): Promise<Application> => {
-  const { company_name, job_tittle, status } = application;
+  const { company_name, job_tittle, status } = appData;
   const { rows } = await query(
-    "INSERT INTO applications (company_name, job_tittle, status) VALUES ($1, $2, $3) RETURNING *",
-    [company_name, job_tittle, status]
+    "INSERT INTO applications (company_name, job_tittle, status, user_id) VALUES ($1, $2, $3, $4) RETURNING *",
+    [company_name, job_tittle, status, userId]
   );
   return rows[0];
 };

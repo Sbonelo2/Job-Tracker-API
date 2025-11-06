@@ -6,7 +6,7 @@ export const addApplication = async (
   res: Response
 ): Promise<void> => {
   try {
-    const application = await applicationService.createApplication(req.body);
+    const application = await applicationService.createApplication(req.body, req.user!.id);
     res.status(201).json(application);
   } catch (error) {
     res.status(500).json({ message: "Error in creating application" });
